@@ -1,0 +1,33 @@
+.fixed-bottom {
+  bottom: calc($footerHeight + 10px) !important;
+}
+
+.fixed-basket {
+  height: calc(100vh - $footerHeight) !important;
+}
+
+.fixed-dishesBasket {
+  max-height: calc(100% - (($navHeight + $footerHeight) + (275px))) !important;
+
+  @media (max-width: $breakpoint-md) {
+    max-height: calc(100% - (($navHeight + $footerHeight) + (300px))) !important;
+  }
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: calc(100% - $basketWidth);
+  z-index: 1000;
+  margin: 0px !important;
+  background-color: $mainColor;
+
+  @media (min-width: $breakpoint-xl) {
+    width: 100%;
+  }
+
+  @media (max-width: $breakpoint-md) {
+    width: 100%;
+  }
+}
