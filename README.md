@@ -71,4 +71,4 @@ to practice dynamic frontend development and interactive UI design.
 Christian Noack
 https://christian-noack.com
 
-Software Architecture · Engineering
+Software Architect · Engineer
