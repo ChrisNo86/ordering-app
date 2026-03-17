@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/icons/fav.png" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <script src="./js/db.js" defer></script>
+    <script src="./js/templates.js" defer></script>
+    <script src="./js/script.js" defer></script>
+    <title>Bestellapp</title>
+  </head>
+  <body>
+    <nav id="main_container--nav" class="main_container--nav"></nav>
+    <main class="content">
+      <section class="main_container">
+        <section class="main_container--content">
+          <section id="order_area" class="main_container--content--order_area">
+            <div id="container_head"></div>
+            <div id="dishes_container"></div>
+          </section>
+          <section id="basket" class="main_container--content--basket">
+            <div id="basket_Header" class="main_container--content--basket--header_container"></div>
+            <div id="basket_dishes" class="main_container--content--basket--dishes_container"></div>
+            <div id="basket_summary" class="main_container--content--basket--summary_container"></div>
+          </section>
+        </section>
+        <div id="basket_button_container"></div>
+      </section>
+    </main>
+    <footer id="main_container--footer" class="main_container--footer"></footer>
+  </body>
+</html>
