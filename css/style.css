@@ -552,11 +552,11 @@ html {
   margin-top: 10px;
 }
 .main_container--content--basket--summary_container--order_info--img {
-  position: fixed;
+  position: relative;
   bottom: 0;
   height: 200px;
   width: auto;
-  margin-left: 25px;
+  margin-top: 20px;
   filter: drop-shadow(4px 2px 6px #000000);
   margin-bottom: 75px;
 }
