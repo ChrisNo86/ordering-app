@@ -331,4 +331,31 @@ function dishesSticky() {
 
 window.addEventListener("scroll", function () {
   dishesSticky();
+  highlightActiveCategory();
 });
+
+function highlightActiveCategory() {
+  const sections = document.querySelectorAll('[id^="dishes"]');
+  const navLinks = document.querySelectorAll(
+    ".main_container--content--order_area--nav--menu_dishes a"
+  );
+
+  let current = "";
+
+  sections.forEach((section) => {
+    const sectionTop = section.offsetTop - 200;
+
+    if (window.scrollY >= sectionTop) {
+      current = section.getAttribute("id");
+    }
+  });
+
+  navLinks.forEach((link) => {
+    link.classList.remove("menu-active");
+
+    const href = link.getAttribute("href");
+    if (href && current && href.includes(current)) {
+      link.classList.add("menu-active");
+    }
+  });
+}
