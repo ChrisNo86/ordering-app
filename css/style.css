@@ -112,7 +112,11 @@ html {
 .menu-active {
   background-color: white;
   color: black !important;
-  border-radius: 10px;
+  border-radius: 999px;
+  transform: scale(1.05);
+  padding: 3px 10px;
+  display: inline-flex;
+  width: auto;
 }
 
 .main_container {
@@ -174,6 +178,12 @@ html {
   -o-object-fit: cover;
   object-fit: cover;
   object-position: 70% 27%;
+}
+@media (max-width: 600px) {
+  .main_container--content--order_area--img_container_head--img {
+    height: 220px;
+    object-position: left center;
+  }
 }
 .main_container--content--order_area--img_container_head--logo {
   position: absolute;
@@ -248,6 +258,7 @@ html {
 }
 .main_container--content--order_area--nav--menu_dishes {
   display: grid;
+  justify-items: start;
   grid-template-columns: repeat(10, max-content);
 }
 @media (max-width: 1200px) {
@@ -271,7 +282,10 @@ html {
   }
 }
 .main_container--content--order_area--nav--menu_dishes a {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
   font-size: 14px;
   text-decoration: none;
   color: white;
