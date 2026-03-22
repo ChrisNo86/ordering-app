@@ -1,0 +1,199 @@
+&--order_area {
+  min-height: calc(100vh - ($navHeight + $footerHeight));
+  width: calc(100% - $basketWidth);
+  margin-bottom: 50px;
+
+  @media (max-width: $breakpoint-md) {
+    width: 100%;
+  }
+
+  &--img_container_head {
+    position: relative;
+
+    &--img {
+      height: $restaurantImgHeight;
+      width: 100%;
+      object-fit: cover;
+      object-position: 50% 10%;
+    }
+
+    &--logo {
+      position: absolute;
+      bottom: -30px;
+      left: calc(50% - 45px);
+      height: 100px;
+      width: auto;
+      transition: transform 0s ease-in-out;
+
+      filter: drop-shadow(0px 4px 4px #000000);
+
+      @media (min-width: $breakpoint-lg) {
+        animation: logoAnimation 10s infinite alternate;
+      }
+
+      &:hover {
+        cursor: url("../assets/icons/heart.svg"), auto;
+      }
+
+      @keyframes logoAnimation {
+        0% {
+          transform: translateX(10%) scale(1);
+        }
+        50% {
+          transform: translateX(0%) scale(1.05);
+        }
+        100% {
+          transform: translateX(-10%) scale(1);
+        }
+      }
+    }
+  }
+
+  &--restaurant_info {
+    display: flex;
+    flex-direction: column;
+    padding-inline: 25px;
+    margin-block: 15px;
+    width: fit-content;
+
+    @media (max-width: $breakpoint-md) {
+      margin-top: 35px;
+    }
+
+    &--heading {
+      margin-bottom: 5px;
+    }
+
+    &--rating {
+      margin-top: 10px;
+      color: $mainColor;
+
+      &--stars {
+        height: 15px;
+        width: 15px;
+        fill: $mainColor;
+      }
+    }
+  }
+
+  &--nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px 10px;
+    height: min-content;
+    padding-inline: 25px;
+    margin-block: 10px;
+    background-color: $mainColor;
+    white-space: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+
+    &--menu_dishes {
+      display: grid;
+      grid-template-columns: repeat(10, max-content);
+
+      @media (max-width: $breakpoint-lg) {
+        grid-template-columns: repeat(6, max-content);
+      }
+
+      @media (max-width: $breakpoint-sm) {
+        grid-template-columns: repeat(4, max-content);
+      }
+
+      @media (max-width: $breakpoint-xs) {
+        grid-template-columns: repeat(3, max-content);
+      }
+      @media (max-width: $breakpoint-xxs) {
+        grid-template-columns: repeat(1, max-content);
+      }
+
+      & a {
+        display: inline-block;
+        font-size: 14px;
+        text-decoration: none;
+
+        color: white;
+        font-weight: bold;
+        padding: 5px 15px;
+        border: 2px solid transparent;
+        border-radius: 10px;
+        transition: background-color 300ms ease-in-out;
+
+        &:hover {
+          color: black;
+          transition: background-color 300ms ease-in-out;
+        }
+      }
+    }
+  }
+
+  &--main_dishes {
+    margin-top: 15px;
+    padding-inline: 25px;
+
+    &--img {
+      height: calc($restaurantImgHeight / 2);
+      width: 100%;
+      object-fit: cover;
+      border: 2px solid transparent;
+      border-radius: 20px;
+    }
+
+    &--content {
+      display: flex;
+      flex-direction: column;
+
+      gap: 10px;
+
+      &--heading {
+        font-size: 24px;
+      }
+
+      &--dishes {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        height: fit-content;
+        border: 1px solid $thirdColor;
+        border-radius: 20px;
+        padding: 15px;
+        margin-block: 10px;
+
+        &--heading {
+          font-size: 16px;
+          width: 80%;
+
+          @media (max-width: $breakpoint-xs) {
+            font-size: 14px;
+          }
+        }
+
+        &--ingredients {
+          font-size: 14px;
+          width: 80%;
+        }
+
+        &--price {
+          color: $mainColor;
+          font-weight: bold;
+        }
+
+        & svg {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          height: 35px;
+          width: 35px;
+          fill: $mainColor;
+
+          &:hover {
+            cursor: pointer;
+            transform: scale(0.9);
+          }
+        }
+      }
+    }
+  }
+}

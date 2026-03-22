@@ -1,0 +1,24 @@
+&--nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: $navHeight;
+  width: 100%;
+
+  background-color: $mainColor;
+
+  &--logo {
+    height: 95%;
+    width: auto;
+    padding-inline: 25px;
+    margin-right: calc($basketWidth / 2);
+
+    @media (max-width: $breakpoint-md) {
+      margin-right: 0px;
+    }
+
+    :hover {
+      cursor: pointer;
+    }
+  }
+}
