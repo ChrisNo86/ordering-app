@@ -239,11 +239,24 @@ function renderBasketSummary(subtotal, deliveryCosts, overallPrice) {
 }
 
 function basketOrderedTemplate() {
+
+  let deliveryText = delivery
+    ? "Dein Essen wird schon bald frisch und heiß zu dir geliefert."
+    : "Deine Bestellung steht schon bald zur Abholung bereit.";
+
   return /*html*/ `
     <div class="main_container--content--basket--summary_container--order_info">
-      <h1 class="main_container--content--basket--summary_container--order_info--heading">Vielen Dank für deine Bestellung!</h1>
-      <p class="main_container--content--basket--summary_container--order_info--textarea">Dein Essen wird schon bald frisch und heiß zu dir geliefert.</p>
-      <img id="main_container--content--basket--summary_container--order_info--img" class="main_container--content--basket--summary_container--order_info--img" src="./assets/img/burger_basket.png" alt="">
+      <h1 class="main_container--content--basket--summary_container--order_info--heading">
+        Vielen Dank für deine Bestellung!
+      </h1>
+
+      <p class="main_container--content--basket--summary_container--order_info--textarea">
+        ${deliveryText}
+      </p>
+
+      <img class="main_container--content--basket--summary_container--order_info--img"
+        src="./assets/img/burger_basket.png"
+        alt="">
     </div>
   `;
 }
