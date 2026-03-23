@@ -110,13 +110,17 @@ html {
 }
 
 .menu-active {
-  background-color: white;
+  background-color: gray;
   color: black;
   border-radius: 999px;
   transform: scale(1.05);
   padding: 3px 10px;
   display: inline-flex;
   width: auto;
+}
+
+.menu-active:hover {
+  cursor: pointer;
 }
 
 .main_container {
@@ -368,7 +372,6 @@ html {
   top: 0;
   overflow: auto;
   scrollbar-width: thin;
-  overflow-x: hidden;
   scrollbar-color: rgb(255, 127, 0) transparent;
 }
 @media (max-width: 900px) {
@@ -382,7 +385,6 @@ html {
     background-color: white;
     box-shadow: unset;
     scrollbar-width: thin;
-    overflow-x: hidden;
     scrollbar-color: rgb(255, 127, 0) transparent;
   }
 }
