@@ -130,7 +130,7 @@ function renderBasketHeader() {
     <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/>
   </svg>
   <div class="main_container--content--basket--header_container--switch_delivery">
-  <button onclick="switchToDelivery()" id="delivery_button" class="main_container--content--basket--header_container--switch_delivery--button">
+  <button onclick="setDeliveryMode(true)" id="delivery_button" class="main_container--content--basket--header_container--switch_delivery--button">
   <svg     
     class="main_container--content--basket--header_container--switch_delivery--button--icon"
     xmlns="http://www.w3.org/2000/svg" 
@@ -142,7 +142,7 @@ function renderBasketHeader() {
     <p>15-40min</p>
   </div>
   </button>
-  <button onclick="switchToPickup()" id="pickup_button" class="main_container--content--basket--header_container--switch_delivery--button">
+  <button onclick="setDeliveryMode(false)" id="pickup_button" class="main_container--content--basket--header_container--switch_delivery--button">
   <svg 
     class="main_container--content--basket--header_container--switch_delivery--button--icon"
     xmlns="http://www.w3.org/2000/svg" 
