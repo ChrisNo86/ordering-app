@@ -1,4 +1,12 @@
-let delivery = true;
+function switchToDelivery() {
+  isDelivery = true;
+  updateBasketSummary();
+}
+
+function switchToPickup() {
+  isDelivery = false;
+  updateBasketSummary();
+}
 let ordered = false;
 let baskedOpen = false;
 let easterEgg = false;
@@ -12,6 +20,12 @@ function renderContainerHead() {
   const containerHeadRef = document.getElementById("container_head");
   let menuDishes = getCategoryNames();
   containerHeadRef.innerHTML += getContainerHeadTemplate(menuDishes);
+}
+
+function getDeliveryText(isDelivery) {
+  return isDelivery
+    ? "Dein Essen wird schon bald frisch und heiß zu dir geliefert."
+    : "Deine Bestellung steht schon bald zur Abholung bereit.";
 }
 
 function getCategoryNames() {
@@ -40,15 +54,19 @@ function renderCategory() {
 }
 
 function renderDishes(dishType) {
-  let index = Object.keys(dishes).indexOf(dishType);
-  if (index === -1) return;
-
-  const dishesArray = dishes[dishType];
-  const containerRef = document.getElementById("dishes" + index);
-
+  let dishesArray;
+  let containerId;
+  for (let index = 0; index < Object.keys(dishes).length; index++) {
+    const dish = Object.keys(dishes)[index];
+    if (dishType === dish) {
+      dishesArray = dishes[dish];
+      containerId = "dishes" + index;
+    }
+  }
+  const containerRef = document.getElementById(containerId);
   containerRef.innerHTML = "";
-  for (let i = 0; i < dishesArray.length; i++) {
-    containerRef.innerHTML += getDishesTemplate(i, dishesArray, dishType);
+  for (let index = 0; index < dishesArray.length; index++) {
+    containerRef.innerHTML += getDishesTemplate(index, dishesArray, dishType);
   }
 }
 
@@ -64,9 +82,10 @@ function init() {
   renderContainerHead();
   renderCategory();
   renderBasketNav();
-
-  Object.keys(dishes).forEach(d => renderDishes(d));
-
+  const dishKeys = Object.keys(dishes); // https://www.w3schools.com/jsref/jsref_object_keys.asp
+  for (let index = 0; index < dishKeys.length; index++) {
+    renderDishes(dishKeys[index]);
+  }
   checkDelivery();
   renderBasketButton();
   fixedScroll();
@@ -87,15 +106,26 @@ function checkDelivery() {
   }
 }
 
-function setDeliveryMode(isDelivery) {
-  delivery = isDelivery;
+function switchToDelivery() {
+  const deliveryButtonRef = document.getElementById("delivery_button");
+  const pickupButtonRef = document.getElementById("pickup_button");
+  if (!delivery) {
+    delivery = true;
+    pickupButtonRef.style.backgroundColor = "rgb(216, 216, 216)";
+    deliveryButtonRef.style.backgroundColor = "white";
+  }
+  updateBasketContents();
+  saveToLocalStorage();
+}
 
-  const dBtn = document.getElementById("delivery_button");
-  const pBtn = document.getElementById("pickup_button");
-
-  dBtn.style.backgroundColor = isDelivery ? "white" : "rgb(216,216,216)";
-  pBtn.style.backgroundColor = isDelivery ? "rgb(216,216,216)" : "white";
-checkDelivery();
+function switchToPickup() {
+  const deliveryButtonRef = document.getElementById("delivery_button");
+  const pickupButtonRef = document.getElementById("pickup_button");
+  if (delivery) {
+    delivery = false;
+    deliveryButtonRef.style.backgroundColor = "rgb(216, 216, 216)";
+    pickupButtonRef.style.backgroundColor = "white";
+  }
   updateBasketContents();
   saveToLocalStorage();
 }
@@ -106,18 +136,20 @@ function renderBasketNav() {
 }
 
 function updateBasketContents() {
-  const ref = document.getElementById("basket_dishes");
-  ref.innerHTML = "";
-
-  Object.keys(dishes).forEach(type => {
-    dishes[type].forEach((dish, i) => {
-      if (dish.basketValue > 0) {
-        const price = (dish.price * dish.basketValue).toFixed(2);
-        ref.innerHTML += renderBasketDishes(i, dishes[type], type, price);
+  const basketDishesRef = document.getElementById("basket_dishes");
+  basketDishesRef.innerHTML = "";
+  const dishKeys = Object.keys(dishes); // https://www.w3schools.com/jsref/jsref_object_keys.asp
+  for (let index = 0; index < dishKeys.length; index++) {
+    const dishType = dishKeys[index];
+    const dishesArray = dishes[dishType];
+    for (let index = 0; index < dishesArray.length; index++) {
+      if (dishesArray[index].basketValue > 0) {
+        let currentPrice = dishesArray[index].price;
+        currentPrice = (currentPrice * dishesArray[index].basketValue).toFixed(2);
+        basketDishesRef.innerHTML += renderBasketDishes(index, dishesArray, dishType, currentPrice);
       }
-    });
-  });
-
+    }
+  }
   calculateBasketOverallPrice();
   saveToLocalStorage();
   autoEasterEgg();
@@ -146,14 +178,19 @@ function clearBasket(index, dishType) {
 }
 
 function triggerOrder() {
-  Object.keys(dishes).forEach(cat => {
-    dishes[cat].forEach(d => d.basketValue = 0);
-  });
-
+  let categories = Object.keys(dishes);
+  for (let indexCategories = 0; indexCategories < categories.length; indexCategories++) {
+    const category = categories[indexCategories];
+    for (let indexDishesCategories = 0; indexDishesCategories < dishes[category].length; indexDishesCategories++) {
+      dishes[category][indexDishesCategories].basketValue = 0;
+    }
+  }
   ordered = true;
   updateBasketContents();
   renderBasketButton();
-  hideBasketButton();
+  function hideBasketButton() {
+  document.getElementById("basketButton")?.classList.add("d_none");
+}
   fixedScroll();
 }
 
@@ -180,55 +217,68 @@ function deliveryCostsValue() {
 }
 
 function calculateBasketOverallPrice() {
-  const prices = document.querySelectorAll(".main_container--content--basket--dishes_container--dishes--info--data--price--value");
-  const summaryRef = document.getElementById("basket_summary");
-
-  let subtotal = [...prices].reduce((sum, el) => sum + parseFloat(el.innerHTML), 0);
-  let deliveryCosts = delivery ? deliveryCostsValue() : 0;
-
-  if (subtotal > 0) {
-    let total = (subtotal + deliveryCosts).toFixed(2);
-    summaryRef.innerHTML = renderBasketSummary(subtotal.toFixed(2), deliveryCosts, total);
-    return total;
+  const priceRef = document.querySelectorAll(".main_container--content--basket--dishes_container--dishes--info--data--price--value");
+  const basketSummaryRef = document.getElementById("basket_summary");
+  let overallPrice = 0;
+  let subtotal = 0;
+  let deliveryCosts = 0;
+  if (delivery) deliveryCosts = deliveryCostsValue();
+  for (let index = 0; index < priceRef.length; index++) {
+    const eachPrice = parseFloat(priceRef[index].innerHTML); // https://www.w3schools.com/jsref/jsref_parsefloat.asp
+    overallPrice += eachPrice;
   }
-
-  summaryRef.innerHTML = ordered ? basketOrderedTemplate() : basketPreOrderTemplate();
-  return "0.00";
+  if (overallPrice != "0,00") {
+    overallPrice = (overallPrice + deliveryCosts).toFixed(2);
+    subtotal = (overallPrice - deliveryCosts).toFixed(2);
+    basketSummaryRef.innerHTML = renderBasketSummary(subtotal, deliveryCosts, overallPrice);
+  } else {
+    if (ordered) {
+  basketSummaryRef.innerHTML = basketOrderedTemplate(
+    getDeliveryText(delivery)
+  );
+}
+    if (!ordered) basketSummaryRef.innerHTML = basketPreOrderTemplate();
+  }
+  return overallPrice;
 }
 
 function toggleBasket() {
-  fixedScroll();
   baskedOpen = !baskedOpen;
-  const basketRef = document.getElementById("basket");
-  const orderAreaRef = document.getElementById("order_area");
-  const basketButtonRef = document.getElementById("basketButton");
-  const basketCloseRef = document.getElementById("basketClose");
-  basketRef.classList.toggle("d_block");
-  orderAreaRef.classList.toggle("d_none");
-  basketButtonRef.classList.toggle("d_none");
-  basketCloseRef.classList.toggle("d_block");
-  if (!baskedOpen) renderBasketButton();
-  dishesSticky();
+
+  const b = document.getElementById("basket");
+  const o = document.getElementById("order_area");
+  const btn = document.getElementById("basketButton");
+  const close = document.getElementById("basketClose");
+
+  b.classList.toggle("d_block");
+  o.classList.toggle("d_none");
+  close.classList.toggle("d_block");
+
+ if (window.innerWidth <= 900) {
+  if (baskedOpen) btn.classList.add("d_none");
+  else btn.classList.remove("d_none");
 }
 
-function hideBasketButton() {
+  if (!baskedOpen) renderBasketButton();
+}
+
+function showBasketButton() {
   const basketButtonRef = document.getElementById("basketButton");
-  basketButtonRef.classList.toggle("d_none");
+  basketButtonRef.classList.remove("d_none");
 }
 
 function fixedScroll() {
+  if (window.innerWidth <= 900 && baskedOpen) return;
+
   const btn = document.getElementById("basketButton");
   const basket = document.getElementById("basket");
-  const dishesRef = document.getElementById("basket_dishes");
+  const dishes = document.getElementById("basket_dishes");
 
-  let isBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 75;
+  const bottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 75;
 
-  btn?.classList.toggle("fixed-bottom", isBottom);
-  dishesRef?.classList.toggle("fixed-dishesBasket", isBottom);
-
-  if (basket && window.innerWidth > 900) {
-    basket.classList.toggle("fixed-basket", isBottom);
-  }
+  if (btn && window.innerWidth > 900) btn.classList.toggle("fixed-bottom", bottom);
+  if (basket && window.innerWidth > 900) basket.classList.toggle("fixed-basket", bottom);
+  if (dishes) dishes.classList.toggle("fixed-dishesBasket", bottom);
 }
 
 window.addEventListener("scroll", function () {
@@ -242,29 +292,40 @@ function renderBasketButton() {
 }
 
 function saveToLocalStorage() {
-  let data = {};
-
-  Object.keys(dishes).forEach(cat => {
-    data[cat] = dishes[cat].map(d => d.basketValue);
-  });
-
-  localStorage.setItem("currentBasketValue", JSON.stringify(data));
+  let currentBasketValue = {};
+  const dishKeys = Object.keys(dishes); // https://www.w3schools.com/jsref/jsref_object_keys.asp
+  for (let indexDishKeys = 0; indexDishKeys < dishKeys.length; indexDishKeys++) {
+    const category = dishKeys[indexDishKeys];
+    currentBasketValue[category] = [];
+    for (let indexDishesCategory = 0; indexDishesCategory < dishes[category].length; indexDishesCategory++) {
+      const dish = dishes[category][indexDishesCategory];
+      currentBasketValue[category].push(dish.basketValue);
+    }
+  }
+  localStorage.setItem("currentBasketValue", JSON.stringify(currentBasketValue));
   localStorage.setItem("delivery", JSON.stringify(delivery));
   localStorage.setItem("easterEgg", JSON.stringify(easterEgg));
 }
 
 function getFromLocalStorage() {
-  const data = JSON.parse(localStorage.getItem("currentBasketValue"));
-
-  if (data) {
-    Object.keys(dishes).forEach(cat => {
-      if (!data[cat]) return;
-      dishes[cat].forEach((d, i) => d.basketValue = data[cat][i]);
-    });
+  const basketValuesStorage = JSON.parse(localStorage.getItem("currentBasketValue"));
+  if (basketValuesStorage) {
+    let categories = Object.keys(dishes);
+    for (let indexCategories = 0; indexCategories < categories.length; indexCategories++) {
+      const category = categories[indexCategories];
+      if (basketValuesStorage[category]) {
+        for (let indexDishesCategories = 0; indexDishesCategories < dishes[category].length; indexDishesCategories++) {
+          dishes[category][indexDishesCategories].basketValue = basketValuesStorage[category][indexDishesCategories];
+        }
+      }
+    }
   }
 
-  delivery = JSON.parse(localStorage.getItem("delivery")) ?? delivery;
-  easterEgg = JSON.parse(localStorage.getItem("easterEgg")) ?? easterEgg;
+  const deliveryStorage = JSON.parse(localStorage.getItem("delivery"));
+  if (deliveryStorage !== null) delivery = JSON.parse(deliveryStorage);
+
+  const easterEggStorage = JSON.parse(localStorage.getItem("easterEgg"));
+  if (easterEggStorage !== null) easterEgg = JSON.parse(easterEggStorage);
 }
 
 function updateWidth() {

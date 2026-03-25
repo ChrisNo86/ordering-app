@@ -33,20 +33,6 @@ let dishes = {
       basketValue: 0,
       ingredients: ["Rindfleisch", "Eiernudeln", "Karotten", "Paprika"],
     },
-    {
-      name: "General Tso's Hähnchen",
-      price: 8.49,
-      description: "Frittierte Hähnchenstücke in süß-scharfer Sauce.",
-      basketValue: 0,
-      ingredients: ["Hähnchenbrust", "Sojasauce", "Zucker", "Essig"],
-    },
-    {
-      name: "Gemüse-Frühlingsrollen",
-      price: 4.99,
-      description: "Krosse Frühlingsrollen mit Gemüse und Dip-Sauce.",
-      basketValue: 0,
-      ingredients: ["Teig", "Kohl", "Karotten", "Pilze"],
-    },
   ],
   sideDishes: [
     {
@@ -69,20 +55,6 @@ let dishes = {
       description: "Gedämpfte Brötchen mit Füllung.",
       basketValue: 0,
       ingredients: ["Teig", "Hefe", "Zucker", "Wasser"],
-    },
-    {
-      name: "Asiatischer Salat",
-      price: 5.49,
-      description: "Frischer Salat mit asiatischem Dressing.",
-      basketValue: 0,
-      ingredients: ["Kopfsalat", "Karotten", "Gurke", "Sesam"],
-    },
-    {
-      name: "Szechuan-Nudeln",
-      price: 4.99,
-      description: "Nudeln in würziger Szechuan-Sauce.",
-      basketValue: 0,
-      ingredients: ["Nudeln", "Szechuan-Sauce", "Knoblauch", "Ingwer"],
     },
   ],
   drinks: [
@@ -122,43 +94,6 @@ let dishes = {
       ingredients: ["Pflaumen", "Zucker", "Hefe", "Wasser"],
     },
   ],
-  snacks: [
-    {
-      name: "Sesamkekse",
-      price: 1.99,
-      description: "Kekse mit geröstetem Sesam.",
-      basketValue: 0,
-      ingredients: ["Mehl", "Zucker", "Sesam", "Butter"],
-    },
-    {
-      name: "Peking-Ente Chips",
-      price: 2.49,
-      description: "Knusprige Chips, inspiriert von der Peking-Ente.",
-      basketValue: 0,
-      ingredients: ["Chips", "Gewürze", "Zucker", "Salz"],
-    },
-    {
-      name: "Edamame",
-      price: 3.49,
-      description: "Junge Sojabohnenschoten, gekocht und gesalzen.",
-      basketValue: 0,
-      ingredients: ["Edamame", "Salz"],
-    },
-    {
-      name: "Frühlingsrollenteig-Röllchen",
-      price: 4.99,
-      description: "Kleine Röllchen aus Frühlingsrollenteig mit Gewürzen.",
-      basketValue: 0,
-      ingredients: ["Teig", "Gewürze", "Füllung nach Wahl"],
-    },
-    {
-      name: "Kokosnuss-Makkarons",
-      price: 2.99,
-      description: "Makkarons mit Kokosnuss.",
-      basketValue: 0,
-      ingredients: ["Kokosnuss", "Eier", "Zucker", "Mehl"],
-    },
-  ],
   desserts: [
     {
       name: "Mango-Pudding",
@@ -173,27 +108,6 @@ let dishes = {
       description: "Dessert mit roter Bohnenpaste.",
       basketValue: 0,
       ingredients: ["Rote Bohnen", "Zucker", "Mehl"],
-    },
-    {
-      name: "Sesambällchen",
-      price: 2.99,
-      description: "Sesambällchen mit Bohnenpaste.",
-      basketValue: 0,
-      ingredients: ["Sesam", "Reismehl", "Bohnenpaste"],
-    },
-    {
-      name: "Grüner Tee Eis",
-      price: 3.49,
-      description: "Eis aus grünem Tee.",
-      basketValue: 0,
-      ingredients: ["Grüner Tee", "Milch", "Zucker"],
-    },
-    {
-      name: "Pflaumen-Gelee",
-      price: 3.99,
-      description: "Gelee aus Pflaumen.",
-      basketValue: 0,
-      ingredients: ["Pflaumen", "Zucker", "Gelatine"],
     },
   ],
   soups: [
@@ -211,27 +125,6 @@ let dishes = {
       basketValue: 0,
       ingredients: ["Wonton-Teig", "Schweinefleisch", "Gemüse", "Brühe"],
     },
-    {
-      name: "Misosuppe mit Seidentofu",
-      price: 3.99,
-      description: "Leichte Misosuppe mit Seidentofu.",
-      basketValue: 0,
-      ingredients: ["Miso-Paste", "Seidentofu", "Wakame"],
-    },
-    {
-      name: "Hühnersuppe mit Glasnudeln",
-      price: 5.49,
-      description: "Würzige Hühnersuppe mit Glasnudeln.",
-      basketValue: 0,
-      ingredients: ["Huhn", "Glasnudeln", "Brühe", "Gemüse"],
-    },
-    {
-      name: "Szechuan-Suppe",
-      price: 5.99,
-      description: "Scharfe Suppe mit Tofu und Chili.",
-      basketValue: 0,
-      ingredients: ["Tofu", "Chili", "Gemüse", "Brühe"],
-    },
   ],
   vegetarian: [
     {
@@ -247,27 +140,6 @@ let dishes = {
       description: "Würzige gebratene Auberginen in Knoblauch-Sauce.",
       basketValue: 0,
       ingredients: ["Auberginen", "Knoblauch", "Chili", "Sojasauce"],
-    },
-    {
-      name: "Gemüsenudeln",
-      price: 5.99,
-      description: "Nudeln mit verschiedenem Gemüse in leichter Soße.",
-      basketValue: 0,
-      ingredients: ["Nudeln", "Karotten", "Paprika", "Sojasauce"],
-    },
-    {
-      name: "Szechuan Tofu",
-      price: 7.49,
-      description: "Tofu mit scharfer Szechuan-Sauce.",
-      basketValue: 0,
-      ingredients: ["Tofu", "Szechuan-Sauce", "Chili", "Knoblauch"],
-    },
-    {
-      name: "Frühlingsrollen",
-      price: 4.49,
-      description: "Knusprige Rollen gefüllt mit Gemüse.",
-      basketValue: 0,
-      ingredients: ["Teig", "Karotten", "Kohl", "Zwiebeln"],
     },
   ],
   breakfast: [
@@ -291,43 +163,6 @@ let dishes = {
       description: "Erfrischender Smoothie aus tropischen Früchten.",
       basketValue: 0,
       ingredients: ["Mango", "Ananas", "Kokosmilch", "Eiswürfel"],
-    },
-    {
-      name: "Gedämpfte Eier",
-      price: 2.99,
-      description: "Sanft gedämpfte Eier mit Sojasauce und Frühlingszwiebeln.",
-      basketValue: 0,
-      ingredients: ["Eier", "Sojasauce", "Frühlingszwiebeln", "Wasser"],
-    },
-  ],
-  sauces: [
-    {
-      name: "Erdnuss-Sauce",
-      price: 1.99,
-      description: "Cremige Sauce aus Erdnüssen und Kokosmilch.",
-      basketValue: 0,
-      ingredients: ["Erdnüsse", "Kokosmilch", "Chili", "Sojasauce"],
-    },
-    {
-      name: "Süß-Sauer-Sauce",
-      price: 1.49,
-      description: "Fruchtige Sauce mit einer perfekten Balance aus Süße und Säure.",
-      basketValue: 0,
-      ingredients: ["Ananas", "Essig", "Zucker", "Ketchup"],
-    },
-    {
-      name: "Szechuan-Chili-Sauce",
-      price: 1.99,
-      description: "Scharfe und würzige Szechuan-Sauce mit einem Kick.",
-      basketValue: 0,
-      ingredients: ["Chili", "Knoblauch", "Szechuanpfeffer", "Sojasauce"],
-    },
-    {
-      name: "Ingwer-Sojasauce",
-      price: 1.49,
-      description: "Leichte Sojasauce mit frischem Ingwer.",
-      basketValue: 0,
-      ingredients: ["Sojasauce", "Ingwer", "Knoblauch", "Zucker"],
     },
   ],
 };

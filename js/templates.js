@@ -91,7 +91,7 @@ function getDishesTemplate(index, dishesArray, dishType) {
       <p class="main_container--content--order_area--main_dishes--content--dishes--ingredients"> ● ${dishesArray[index].ingredients
         .join(" ● ")
         .replace(/, /g, " ")}</p>
-      <span class="main_container--content--order_area--main_dishes--content--dishes--price">${dishesArray[index].price}€</span>
+      <span class="main_container--content--order_area--main_dishes--content--dishes--price">${dishesArray[index].price.toFixed(2).replace(".", ",")}€</span>
       <svg  onclick="updateBasketValue(${index},'${dishType}')" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
         <path
           d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
@@ -130,7 +130,7 @@ function renderBasketHeader() {
     <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/>
   </svg>
   <div class="main_container--content--basket--header_container--switch_delivery">
-  <button onclick="setDeliveryMode(true)" id="delivery_button" class="main_container--content--basket--header_container--switch_delivery--button">
+  <button onclick="switchToDelivery()" id="delivery_button" class="main_container--content--basket--header_container--switch_delivery--button">
   <svg     
     class="main_container--content--basket--header_container--switch_delivery--button--icon"
     xmlns="http://www.w3.org/2000/svg" 
@@ -142,7 +142,7 @@ function renderBasketHeader() {
     <p>15-40min</p>
   </div>
   </button>
-  <button onclick="setDeliveryMode(false)" id="pickup_button" class="main_container--content--basket--header_container--switch_delivery--button">
+  <button onclick="switchToPickup()" id="pickup_button" class="main_container--content--basket--header_container--switch_delivery--button">
   <svg 
     class="main_container--content--basket--header_container--switch_delivery--button--icon"
     xmlns="http://www.w3.org/2000/svg" 
@@ -238,12 +238,7 @@ function renderBasketSummary(subtotal, deliveryCosts, overallPrice) {
   `;
 }
 
-function basketOrderedTemplate() {
-
-  let deliveryText = delivery
-    ? "Dein Essen wird schon bald frisch und heiß zu dir geliefert."
-    : "Deine Bestellung steht schon bald zur Abholung bereit.";
-
+function basketOrderedTemplate(deliveryText) {
   return /*html*/ `
     <div class="main_container--content--basket--summary_container--order_info">
       <h1 class="main_container--content--basket--summary_container--order_info--heading">
