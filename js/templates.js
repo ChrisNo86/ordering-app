@@ -258,6 +258,6 @@ function basketOrderedTemplate(deliveryText) {
 
 function renderBasketButtonTemplate(overallPrice) {
   return /*html*/ `      
-    <button onclick="toggleBasket()" class="main_container--basket" id="basketButton">Warenkorb:<p>${overallPrice}€</p></button>
+    <button onclick="toggleBasket()" class="main_container--basket" id="basketButton">Warenkorb:<p>${overallPrice.toFixed(2).replace(".", ",")}€</p></button>
   `;
 }

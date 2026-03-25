@@ -1,3 +1,6 @@
+const STORAGE_VERSION = "v1";
+let delivery = true;
+
 function switchToDelivery() {
   isDelivery = true;
   updateBasketSummary();
@@ -145,7 +148,7 @@ function updateBasketContents() {
     for (let index = 0; index < dishesArray.length; index++) {
       if (dishesArray[index].basketValue > 0) {
         let currentPrice = dishesArray[index].price;
-        currentPrice = (currentPrice * dishesArray[index].basketValue).toFixed(2);
+        currentPrice = (currentPrice * dishesArray[index].basketValue).toFixed(2).replace(".", ",");
         basketDishesRef.innerHTML += renderBasketDishes(index, dishesArray, dishType, currentPrice);
       }
     }
@@ -217,29 +220,26 @@ function deliveryCostsValue() {
 }
 
 function calculateBasketOverallPrice() {
-  const priceRef = document.querySelectorAll(".main_container--content--basket--dishes_container--dishes--info--data--price--value");
-  const basketSummaryRef = document.getElementById("basket_summary");
-  let overallPrice = 0;
-  let subtotal = 0;
-  let deliveryCosts = 0;
-  if (delivery) deliveryCosts = deliveryCostsValue();
-  for (let index = 0; index < priceRef.length; index++) {
-    const eachPrice = parseFloat(priceRef[index].innerHTML); // https://www.w3schools.com/jsref/jsref_parsefloat.asp
-    overallPrice += eachPrice;
+  const prices = document.querySelectorAll(".main_container--content--basket--dishes_container--dishes--info--data--price--value");
+  const summary = document.getElementById("basket_summary");
+
+  let overall = 0;
+  prices.forEach(p => overall = Math.round((overall + parseFloat(p.innerHTML.replace(",", "."))) * 100) / 100);
+
+  if (overall === 0) {
+    summary.innerHTML = ordered
+      ? basketOrderedTemplate(getDeliveryText(delivery))
+      : basketPreOrderTemplate();
+    return 0;
   }
-  if (overallPrice != "0,00") {
-    overallPrice = (overallPrice + deliveryCosts).toFixed(2);
-    subtotal = (overallPrice - deliveryCosts).toFixed(2);
-    basketSummaryRef.innerHTML = renderBasketSummary(subtotal, deliveryCosts, overallPrice);
-  } else {
-    if (ordered) {
-  basketSummaryRef.innerHTML = basketOrderedTemplate(
-    getDeliveryText(delivery)
-  );
-}
-    if (!ordered) basketSummaryRef.innerHTML = basketPreOrderTemplate();
-  }
-  return overallPrice;
+
+  let deliveryC = delivery ? deliveryCostsValue() : 0;
+  let total = (overall + deliveryC).toFixed(2).replace(".", ",");
+  let sub = overall.toFixed(2).replace(".", ",");
+  let del = deliveryC.toFixed(2).replace(".", ",");
+
+  summary.innerHTML = renderBasketSummary(sub, del, total);
+  return overall;
 }
 
 function toggleBasket() {
@@ -322,10 +322,10 @@ function getFromLocalStorage() {
   }
 
   const deliveryStorage = JSON.parse(localStorage.getItem("delivery"));
-  if (deliveryStorage !== null) delivery = JSON.parse(deliveryStorage);
+if (deliveryStorage !== null) delivery = deliveryStorage;
 
-  const easterEggStorage = JSON.parse(localStorage.getItem("easterEgg"));
-  if (easterEggStorage !== null) easterEgg = JSON.parse(easterEggStorage);
+const easterEggStorage = JSON.parse(localStorage.getItem("easterEgg"));
+if (easterEggStorage !== null) easterEgg = easterEggStorage;
 }
 
 function updateWidth() {
