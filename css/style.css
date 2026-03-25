@@ -454,7 +454,15 @@ html {
   overflow-x: hidden;
   scrollbar-width: thin;
   scrollbar-color: rgb(255, 127, 0) transparent;
-  max-height: calc(100% - 450px);
+  max-height: calc(100% - 500px);
+}
+@media (max-width: 600px) {
+  .main_container--content--basket--dishes_container {
+    max-height: calc(100% - 400px);
+  }
+  .fixed-dishesBasket {
+    max-height: calc(100% - 400px);
+  }
 }
 .main_container--content--basket--dishes_container--dishes {
   display: flex;
@@ -530,7 +538,7 @@ html {
   width: -moz-fit-content;
   width: fit-content;
   margin: auto;
-  margin-top: 50px;
+  margin-top: 30px;
   background-color: rgb(255, 127, 0);
   padding: 10px 20px;
   border: 2px solid transparent;
